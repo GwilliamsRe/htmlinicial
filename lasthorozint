@@ -1,0 +1,114 @@
+<html lang="pt-br">
+<head>
+	<title>Last Horizont</title>
+	<meta charset="utf-8">
+</head>
+
+<style>
+	canvas{
+		border: solid 2px;
+	}
+</style>
+<body>
+	<center><h1 id="titulo">Last Horizont</h1></center>
+	<div style="width:700px; margin:0 auto; padding-top: 100px;">
+	<canvas width="800" height="500"></canvas>
+	</div>
+	<script>
+		var left=65, up=87, right=68, down= 83;
+		var mvleft = mvup = mvright = mvdown = false;
+		var cnv = document.querySelector("canvas");
+		var ctx = cnv.getContext("2d");
+		contQueda=0;
+		var personagem = {
+			x: 10,
+			y: 450
+		};
+
+		update();
+
+		window.addEventListener("keydown", keydownHandler);
+
+		window.addEventListener("keyup", keyupHandler);
+
+
+		function keydownHandler(e){
+
+			var key = e.keyCode;
+
+			if(key === left && key !== right){
+					mvleft = true;
+				}
+				if(key === up && key !== down){
+					mvup = true;
+				}
+				if(key === right && key !== left){
+					mvright = true;
+				}
+				if(key === down && key !== up){
+					mvdown = true;
+				}
+
+		}
+
+
+		function keyupHandler(e){
+
+			var key = e.keyCode;
+
+			var key = e.keyCode;
+				if(key === left && key !== right){
+					mvleft = false;
+				}
+				if(key === up && key !== down){
+					mvup = false;
+				}
+				if(key === right && key !== left){
+					mvright = false;
+				}
+				if(key === down && key !== up){
+					mvdown = false;
+				}
+
+
+		}
+
+
+		function move(){
+			if(mvleft){
+					personagem.x--;
+				}
+				if(mvup){
+					personagem.y--;
+					contQueda++;
+					if(contQueda=>2){
+						personagem.y++
+					};
+				}
+			
+				if(mvright){
+					personagem.x++;
+				}
+				
+
+		}
+
+		function render(){
+
+			ctx.clearRect(0,0,cnv.width,cnv.height);
+
+			ctx.fillRect(personagem.x,personagem.y,50,50);
+		}
+
+
+		function update(){
+			requestAnimationFrame(update, cnv);
+
+			move();
+
+			render();
+		}
+	</script>
+	
+</body>
+</html>
